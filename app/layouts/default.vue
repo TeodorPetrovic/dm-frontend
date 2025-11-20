@@ -1,25 +1,37 @@
 <template>
-  <UHeader title="DM">
-    <UNavigationMenu :items="items" />
+  <div>
+    <UHeader title="DM">
+      <UNavigationMenu :items="items" />
 
-    <template #body>
-      <UNavigationMenu :items="items" orientation="vertical" />
-    </template>
-  </UHeader>
+      <template #trailing>
+        <UButton 
+          to="/cart" 
+          icon="i-lucide-shopping-cart" 
+          variant="ghost"
+          :badge="totalItems > 0 ? totalItems : undefined"
+        />
+      </template>
 
-  <main>
-    <slot />
-  </main>
+      <template #body>
+        <UNavigationMenu :items="items" orientation="vertical" />
+      </template>
+    </UHeader>
 
-  <UFooter>
-    <p class="text-muted text-sm">Copyright © {{ new Date().getFullYear() }}</p>
-  </UFooter>
+    <main>
+      <slot />
+    </main>
+
+    <UFooter>
+      <p class="text-muted text-sm">Copyright © {{ new Date().getFullYear() }}</p>
+    </UFooter>
+  </div>
 </template>
 
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui'
 
 const route = useRoute()
+const { totalItems } = useShoppingCart()
 
 const items = computed<NavigationMenuItem[]>(() => [
   {
