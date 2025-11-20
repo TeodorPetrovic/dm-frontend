@@ -59,7 +59,7 @@
                 <span>${{ totalPrice.toFixed(2) }}</span>
               </div>
             </div>
-            <UButton class="w-full" size="lg">Proceed to Checkout</UButton>
+            <UButton class="w-full" size="lg" @click="handleCheckout">Proceed to Checkout</UButton>
             <UButton class="w-full mt-2" variant="outline" to="/shop">Continue Shopping</UButton>
             <UButton 
               class="w-full mt-2" 
@@ -77,7 +77,12 @@
 </template>
 
 <script lang="ts" setup>
+const router = useRouter();
 const { cart, removeFromCart, updateQuantity, clearCart, totalItems, totalPrice } = useShoppingCart();
+
+const handleCheckout = () => {
+  router.push(`/checkout/success?total=${totalPrice.value.toFixed(2)}`);
+};
 
 useSeoMeta({
   title: 'Shopping Cart',

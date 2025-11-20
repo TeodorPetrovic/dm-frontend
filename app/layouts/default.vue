@@ -50,6 +50,11 @@ const items = computed<NavigationMenuItem[]>(() => [
     active: route.path.startsWith('/category')
   },
   {
+    label: 'Cart',
+    to: '/cart',
+    active: route.path.startsWith('/cart')
+  },
+  {
     label: 'Admin',
     to: '/admin',
   },

@@ -31,7 +31,8 @@
         <p class="text-2xl font-bold pt-4">{{ data.name }}</p>
         <p class="text-gray-600">{{ data.description }}</p>
         <p class="text-2xl font-bold">15$</p>
-        <UButton class="w-full" @click="handleAddToCart">Add to cart</UButton>
+        <UButton class="w-full mb-2" @click="handleAddToCart">Add to cart</UButton>
+        <UButton class="w-full" variant="outline" @click="handleCheckout">Buy Now</UButton>
       </div>
     </div>
 
@@ -74,6 +75,18 @@ const handleAddToCart = () => {
     img_url: data.img_url,
     price: 15,
   });
+  router.push('/cart');
+};
+
+const handleCheckout = () => {
+  addToCart({
+    product_id: data.product_id,
+    slug: data.slug,
+    name: data.name,
+    img_url: data.img_url,
+    price: 15,
+  });
+  router.push(`/checkout/success?total=15.00`);
 };
 
 useSeoMeta({
