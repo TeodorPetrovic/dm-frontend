@@ -18,7 +18,7 @@
             <div>
               <p class="text-2xl font-bold">15$</p>
             </div>
-            <UButton class="cursor-pointer" icon="i-lucide-shopping-cart" @click="addToShoppingCart(product.product_id)" />
+            <UButton class="cursor-pointer" icon="i-lucide-shopping-cart" @click="addToShoppingCart(product)" />
           </div>
         </template>
       </UCard>
@@ -29,11 +29,18 @@
 <script lang="ts" setup>
 import type { Product } from '~/types/Product';
 
-
 const products: Product[] = await $fetch("/api/shop");
 
-function addToShoppingCart(id: number) {
-  console.log("Adding product " + id + " to shopping cart")
+const { addToCart } = useShoppingCart();
+
+function addToShoppingCart(product: Product) {
+  addToCart({
+    product_id: product.product_id,
+    slug: product.slug,
+    name: product.name,
+    img_url: product.img_url,
+    price: 15,
+  });
 }
 
 </script>
