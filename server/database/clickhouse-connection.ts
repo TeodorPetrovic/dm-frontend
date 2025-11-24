@@ -9,6 +9,9 @@ export const clickhouseClient = createClient({
 });
 
 // Initialize the events table
+// Note: This function is called automatically on server startup.
+// For production deployments, use the migration file instead:
+// database-migrations/002_create_clickhouse_events_table.sql
 export async function initializeEventTable() {
   const query = `
     CREATE TABLE IF NOT EXISTS events (
