@@ -14,7 +14,7 @@ export default defineEventHandler(async (event_handler) => {
     await insertEvent({
       event_type: body.event_type,
       product_id: body.product_id,
-      user_session: body.user_session || 'anonymous',
+      user_session: body.user_session || `anonymous_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
       event_metadata: body.event_metadata || {},
       created_at: new Date(),
     });

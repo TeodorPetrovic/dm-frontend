@@ -1,6 +1,8 @@
 import { createClient } from '@clickhouse/client';
 
 // Create ClickHouse client for event tracking
+// Note: Ensure CLICKHOUSE_HOST, CLICKHOUSE_USER, CLICKHOUSE_PASSWORD, and CLICKHOUSE_DATABASE
+// environment variables are set in production for proper authentication and security
 export const clickhouseClient = createClient({
   host: process.env.CLICKHOUSE_HOST || 'http://localhost:8123',
   username: process.env.CLICKHOUSE_USER || 'default',
