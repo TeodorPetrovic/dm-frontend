@@ -72,7 +72,7 @@ export const useShoppingCart = () => {
 };
 
 // Helper function to track events
-const trackEvent = async (eventType: string, productId: number) => {
+const trackEvent = async (eventType: string, productId: number, metadata?: Record<string, any>) => {
   try {
     // Get or create a session ID
     const sessionId = getSessionId();
@@ -83,6 +83,7 @@ const trackEvent = async (eventType: string, productId: number) => {
         event_type: eventType,
         product_id: productId,
         user_session: sessionId,
+        event_metadata: metadata,
       },
     });
   } catch (error) {
@@ -106,7 +107,8 @@ const getSessionId = (): string => {
 // Export trackEvent for use in other components
 export const useEventTracking = () => {
   return {
-    trackEvent: (eventType: string, productId: number) => trackEvent(eventType, productId),
+    trackEvent: (eventType: string, productId: number, metadata?: Record<string, any>) => 
+      trackEvent(eventType, productId, metadata),
     getSessionId,
   };
 };

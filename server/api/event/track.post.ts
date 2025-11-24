@@ -1,5 +1,4 @@
-import { db } from "~~/server/database/connection";
-import { event } from "~~/server/database/schemas/event.schema";
+import { insertEvent } from "~~/server/database/clickhouse-connection";
 
 export default defineEventHandler(async (event_handler) => {
   const body = await readBody(event_handler);
@@ -11,11 +10,21 @@ export default defineEventHandler(async (event_handler) => {
     });
   }
 
-  const newEvent = await db.insert(event).values({
-    event_type: body.event_type,
-    product_id: body.product_id,
-    user_session: body.user_session || null,
-  });
+  try {
+    await insertEvent({
+      event_type: body.event_type,
+      product_id: body.product_id,
+      user_session: body.user_session || '',
+      event_metadata: body.event_metadata || {},
+      created_at: new Date(),
+    });
 
-  return { success: true, event_id: newEvent[0].insertId };
+    return { success: true };
+  } catch (error) {
+    console.error('Error tracking event:', error);
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'Failed to track event'
+    });
+  }
 });
